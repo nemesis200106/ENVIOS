@@ -1,0 +1,32 @@
+<div class="max-w-md mx-auto bg-white shadow-2xl rounded-2xl p-6 border border-gray-100">
+  <h2 class="text-xl font-bold text-gray-800 mb-6">Calcula tu envío</h2>
+  
+  <div class="relative mb-4">
+    <label class="text-sm text-gray-500 ml-2">Envías desde Chile</label>
+    <div class="flex items-center border-2 border-blue-500 rounded-xl p-3">
+      <input type="number" placeholder="100.000" class="w-full outline-none text-lg font-semibold">
+      <span class="flex items-center gap-2 font-bold text-gray-700">
+        🇨🇱 CLP
+      </span>
+    </div>
+  </div>
+
+  <div class="flex flex-col gap-2 ml-4 mb-4 border-l-2 border-dashed border-gray-300 pl-4 py-2 text-sm text-gray-600">
+    <span>Tasa: 1 CLP → 0.0078 BOB</span>
+    <span>Comisión: $0 CLP</span>
+  </div>
+
+  <div class="relative mb-8">
+    <label class="text-sm text-gray-500 ml-2">Reciben en Bolivia</label>
+    <div class="flex items-center border-2 border-gray-200 bg-gray-50 rounded-xl p-3">
+      <input type="number" readonly placeholder="780.00" class="w-full bg-transparent outline-none text-lg font-semibold">
+      <span class="flex items-center gap-2 font-bold text-gray-700">
+        🇧🇴 BOB
+      </span>
+    </div>
+  </div>
+
+  <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 rounded-xl transition-all shadow-lg text-lg">
+    Enviar dinero ahora
+  </button>
+</div>
