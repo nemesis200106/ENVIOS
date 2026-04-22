@@ -3,88 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envíos Chile-Bolivia | Full Cell Calama</title>
+    <title>Cotizador | Full Cell Calama</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         .hero-gradient { background: linear-gradient(135deg, #012169 0%, #003366 100%); }
-        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; z-index: 100; transition: transform 0.3s; }
-        .whatsapp-float:hover { transform: scale(1.1); }
+        /* Animación suave para el panel oculto */
+        #admin-panel { display: none; transition: all 0.4s ease; }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; justify-content: center; align-items: center; font-size: 30px; z-index: 100; }
     </style>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-50">
 
     <a id="wa-float" href="#" target="_blank" class="whatsapp-float shadow-lg">
         <i class="fab fa-whatsapp"></i>
     </a>
 
-    <nav class="bg-white py-6 shadow-md">
+    <nav class="bg-white py-6 shadow-sm">
         <div class="container mx-auto px-6">
-            <h1 class="text-3xl font-black text-blue-900">FULL CELL <span class="text-orange-500">CALAMA</span></h1>
+            <h1 class="text-2xl font-black text-blue-900 tracking-tight">FULL CELL <span class="text-orange-500 font-extrabold uppercase text-3xl">360</span></h1>
         </div>
     </nav>
 
-    <section class="hero-gradient py-12 md:py-20 px-6">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-10">
+    <section class="hero-gradient py-12 md:py-24 px-6 min-h-[80vh] flex items-center">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
             
-            <div class="text-white max-w-lg text-center md:text-left">
-                <h2 class="text-4xl font-bold mb-4">Envía dinero a Bolivia rápido y seguro</h2>
-                <p class="text-lg opacity-90 mb-6">Calcula tu envío con la tasa actualizada y recibe el comprobante por WhatsApp.</p>
+            <div class="text-white max-w-lg">
+                <h2 class="text-5xl font-extrabold mb-6">Cotiza tu envío a Bolivia</h2>
+                <p class="text-xl opacity-80 mb-4 font-light">Calcula en tiempo real con la tasa de hoy. Seguro, rápido y directo a cuenta bancaria.</p>
+                <div class="flex gap-4 items-center text-orange-400 font-bold">
+                    <i class="fas fa-university text-2xl"></i>
+                    <span class="text-white font-medium">Depósitos en Banco Unión, BCP y más.</span>
+                </div>
             </div>
 
-            <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8 border border-gray-100">
-                <div class="mb-6">
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Monto a enviar (Chile)</label>
-                    <div class="flex items-center border-b-2 border-blue-600 py-2">
-                        <input type="number" id="input-clp" value="100000" class="w-full text-3xl font-bold outline-none">
-                        <span class="text-xl font-bold text-gray-400 pl-2 text-right w-24">CLP</span>
-                    </div>
-                </div>
-
-                <div class="bg-blue-50 rounded-2xl p-4 mb-6">
-                    <div class="flex justify-between text-sm mb-1 text-blue-900 font-semibold">
-                        <span>Tasa actual:</span>
-                        <span id="display-tasa">1 CLP = 0.0078 BOB</span>
-                    </div>
-                    <div class="flex justify-between text-sm text-green-600 font-bold">
-                        <span>Comisión:</span>
-                        <span>$0 CLP</span>
-                    </div>
-                </div>
-
+            <div class="bg-white w-full max-w-md rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.3)] p-10 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-2 h-full bg-orange-500"></div>
+                
                 <div class="mb-8">
-                    <label class="block text-xs font-bold text-gray-400 uppercase mb-2">Reciben en Bolivia</label>
-                    <div class="flex items-center border-b-2 border-gray-200 py-2">
-                        <input type="text" id="output-bob" readonly class="w-full text-3xl font-bold text-blue-800 bg-transparent outline-none">
-                        <span class="text-xl font-bold text-gray-400 pl-2 text-right w-24">BOB</span>
+                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Monto en Pesos Chilenos</label>
+                    <div class="flex items-center border-b-4 border-blue-700 py-2">
+                        <input type="number" id="input-clp" value="100000" class="w-full text-4xl font-bold outline-none text-gray-800">
+                        <span class="text-xl font-black text-blue-700 ml-2">CLP</span>
                     </div>
                 </div>
 
-                <button onclick="enviarWhatsApp()" class="w-full bg-blue-600 hover:bg-orange-500 text-white font-black py-5 rounded-2xl transition-all shadow-lg text-xl uppercase tracking-tighter">
-                    Enviar esta cotización
+                <div class="bg-gray-50 border border-gray-100 rounded-2xl p-5 mb-8">
+                    <div class="flex justify-between items-center mb-3">
+                        <span class="text-gray-500 font-medium">Tasa de cambio:</span>
+                        <span id="display-tasa" class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-bold">1 CLP = 0.0078 BOB</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-500 font-medium">Comisión:</span>
+                        <span class="text-green-600 font-bold">COSTO $0</span>
+                    </div>
+                </div>
+
+                <div class="mb-10">
+                    <label class="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2 block">Total a recibir en Bolivia</label>
+                    <div class="flex items-center border-b-4 border-gray-100 py-2">
+                        <input type="text" id="output-bob" readonly class="w-full text-4xl font-bold text-blue-900 bg-transparent outline-none">
+                        <span class="text-xl font-black text-gray-300 ml-2">BOB</span>
+                    </div>
+                </div>
+
+                <button onclick="enviarWhatsApp()" class="w-full bg-blue-700 hover:bg-blue-800 text-white font-black py-5 rounded-2xl transition-all shadow-xl text-xl uppercase flex items-center justify-center gap-3">
+                    <i class="fab fa-whatsapp text-2xl"></i> Enviar Cotización
                 </button>
             </div>
         </div>
     </section>
 
-    <section class="py-12 bg-gray-200">
-        <div class="container mx-auto px-6 max-w-md">
-            <div class="bg-gray-800 text-white p-6 rounded-2xl shadow-xl">
-                <h3 class="text-lg font-bold mb-4 border-b border-gray-600 pb-2"><i class="fas fa-cog mr-2"></i>Panel de Control (Solo Tú)</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">56945665141</label>
-                        <input type="text" id="admin-phone" value="569XXXXXXXX" placeholder="Ej: 56912345678" class="w-full bg-gray-700 p-2 rounded border border-gray-600 outline-none focus:border-orange-500 transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-gray-400 mb-1">0,010346</label>
-                        <input type="number" id="admin-tasa" value="0.0078" step="0.0001" class="w-full bg-gray-700 p-2 rounded border border-gray-600 outline-none focus:border-green-500 transition text-green-400 font-bold">
-                    </div>
-                    <p class="text-[10px] text-gray-500 italic text-center">Al cambiar estos valores, la calculadora y el link de WhatsApp se actualizan solos.</p>
+    <div id="admin-panel" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[200] flex items-center justify-center p-6">
+        <div class="bg-white w-full max-w-sm rounded-3xl p-8 shadow-2xl relative">
+            <button onclick="toggleAdmin()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+            
+            <h3 class="text-xl font-black text-gray-800 mb-6 flex items-center gap-2 uppercase tracking-tighter">
+                <i class="fas fa-lock text-orange-500"></i> Configuración Maestra
+            </h3>
+            
+            <div class="space-y-6">
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-2">WHATSAPP DE RECEPCIÓN</label>
+                    <input type="text" id="admin-phone" value="56945665141" class="w-full bg-gray-100 p-4 rounded-xl font-bold border-2 border-transparent focus:border-blue-500 outline-none">
                 </div>
+                <div>
+                    <label class="block text-xs font-bold text-gray-500 mb-2">TASA DEL DÍA (1 CLP a BOB)</label>
+                    <input type="number" id="admin-tasa" value="0,010346" step="0.0001" class="w-full bg-gray-100 p-4 rounded-xl font-bold border-2 border-transparent focus:border-orange-500 outline-none text-orange-600 text-2xl">
+                </div>
+                <button onclick="toggleAdmin()" class="w-full bg-gray-800 text-white font-bold py-4 rounded-xl uppercase tracking-widest text-sm">
+                    Guardar y Cerrar
+                </button>
+                <p class="text-center text-[10px] text-gray-400">Presiona "M" en el teclado para ocultar/mostrar este panel.</p>
             </div>
         </div>
-    </section>
+    </div>
 
     <script>
         const inputClp = document.getElementById('input-clp');
@@ -92,21 +105,31 @@
         const displayTasa = document.getElementById('display-tasa');
         const adminTasa = document.getElementById('admin-tasa');
         const adminPhone = document.getElementById('admin-phone');
+        const adminPanel = document.getElementById('admin-panel');
         const waFloat = document.getElementById('wa-float');
+
+        // Función para mostrar/ocultar el panel
+        function toggleAdmin() {
+            const isVisible = adminPanel.style.display === 'flex';
+            adminPanel.style.display = isVisible ? 'none' : 'flex';
+        }
+
+        // Detector de tecla "M" para el administrador
+        document.addEventListener('keydown', (e) => {
+            if (e.key.toLowerCase() === 'm') {
+                toggleAdmin();
+            }
+        });
 
         function actualizarCalculos() {
             const clp = parseFloat(inputClp.value) || 0;
             const tasa = parseFloat(adminTasa.value) || 0;
             const phone = adminPhone.value;
             
-            // 1. Actualizar texto de tasa
             displayTasa.innerText = `1 CLP = ${tasa} BOB`;
-            
-            // 2. Calcular monto en Bolivia
-            const totalBob = (clp * tasa).toFixed(2);
+            const totalBob = (clp * tasa).toLocaleString('es-BO', { minimumFractionDigits: 2 });
             outputBob.value = totalBob;
 
-            // 3. Actualizar link de WhatsApp flotante
             waFloat.href = `https://wa.me/${phone}`;
         }
 
@@ -116,24 +139,21 @@
             const tasa = adminTasa.value;
             const phone = adminPhone.value;
             
-            // Mensaje personalizado que te llegará
-            const mensaje = `Hola *Full Cell Calama*, quiero realizar un envío:%0A%0A` +
+            const mensaje = `*COTIZACIÓN FULL CELL 360*%0A%0A` +
                             `🇨🇱 *Envío:* ${clp} CLP%0A` +
-                            `🇧🇴 *Reciben:* ${bob} BOB%0A` +
-                            `📈 *Tasa aplicada:* ${tasa}%0A%0A` +
-                            `¿Cuáles son los datos de transferencia?`;
+                            `🇧🇴 *Recibe:* ${bob} BOB%0A` +
+                            `📈 *Tasa:* ${tasa}%0A%0A` +
+                            `_Favor de enviar comprobante de transferencia._`;
             
             window.open(`https://wa.me/${phone}?text=${mensaje}`, '_blank');
         }
 
-        // Eventos para actualizar en tiempo real
         inputClp.addEventListener('input', actualizarCalculos);
         adminTasa.addEventListener('input', actualizarCalculos);
         adminPhone.addEventListener('input', actualizarCalculos);
 
-        // Iniciar al cargar
+        // Inicializar
         actualizarCalculos();
     </script>
-
 </body>
 </html>
