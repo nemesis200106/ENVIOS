@@ -3,113 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envíos Chile a Bolivia | Full Cell Calama</title>
+    <title>Calculadora de Envíos | Full Cell Calama</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        .hero-gradient { background: linear-gradient(135deg, #003366 0%, #0055aa 100%); }
+        body { font-family: 'Segoe UI', sans-serif; }
+        .hero-gradient { background: linear-gradient(135deg, #012169 0%, #0055aa 100%); }
+        .whatsapp-float { position: fixed; bottom: 20px; right: 20px; background: #25d366; color: white; width: 60px; height: 60px; border-radius: 50px; display: flex; justify-content: center; align-items: center; font-size: 30px; shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 100; }
     </style>
 </head>
 <body class="bg-gray-50">
 
-    <nav class="bg-white py-4 shadow-sm">
-        <div class="container mx-auto px-6 flex justify-between items-center">
-            <div class="text-2xl font-bold text-blue-900 flex items-center gap-2">
-                <i class="fas fa-paper-plane text-orange-500"></i> FULL CELL <span class="text-blue-600 underline decoration-orange-500">CALAMA</span>
-            </div>
-            <div class="hidden md:flex space-x-8 font-medium text-gray-600">
-                <a href="#" class="hover:text-blue-600">Cómo funciona</a>
-                <a href="#" class="hover:text-blue-600">Ayuda</a>
-                <a href="#" class="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition">Iniciar Sesión</a>
+    <a href="https://wa.me/TUNUMEROAQUI" class="whatsapp-float shadow-lg hover:scale-110 transition-transform">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <nav class="bg-white py-6 shadow-sm">
+        <div class="container mx-auto px-6 text-center md:text-left">
+            <div class="text-3xl font-black text-blue-900 tracking-tighter">
+                FULL CELL <span class="text-orange-500">CALAMA</span>
             </div>
         </div>
     </nav>
 
-    <section class="hero-gradient py-12 md:py-24 px-6">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-12">
+    <section class="hero-gradient py-12 px-6">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-center gap-12">
             
-            <div class="text-white max-w-xl">
-                <h1 class="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-                    Envía dinero a Bolivia con la mejor tasa
-                </h1>
-                <p class="text-xl opacity-90 mb-8">
-                    Tus remesas llegan rápido y seguro a cualquier banco o punto de retiro en Bolivia. Sin letras pequeñas.
-                </p>
-                <div class="flex gap-4">
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-check-circle text-orange-400"></i>
-                        <span>Seguro y Protegido</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <i class="fas fa-bolt text-orange-400"></i>
-                        <span>En cuestión de minutos</span>
-                    </div>
-                </div>
+            <div class="text-white max-w-lg text-center md:text-left">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Envía a Bolivia hoy</h1>
+                <p class="text-lg opacity-80 mb-6">Calcula el monto exacto que recibirá tu familiar. Sin comisiones ocultas y con entrega en minutos.</p>
             </div>
 
-            <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-8 border border-gray-100">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Calcula tu envío</h2>
-                
-                <div class="mb-4">
-                    <label class="block text-sm font-semibold text-gray-600 mb-2">Tú envías desde Chile</label>
-                    <div class="flex items-center border-2 border-gray-200 rounded-xl px-4 py-3 focus-within:border-blue-500 transition">
-                        <input type="number" value="100000" id="clp-input" class="w-full text-xl font-bold outline-none text-gray-700">
-                        <span class="flex items-center gap-2 font-bold text-gray-500">🇨🇱 CLP</span>
+            <div class="bg-white w-full max-w-md rounded-3xl shadow-2xl p-8">
+                <div class="mb-6">
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">Monto a enviar (Chile)</label>
+                    <div class="flex items-center border-b-2 border-blue-600 py-2">
+                        <input type="number" value="100000" id="clp-input" class="w-full text-3xl font-bold outline-none text-gray-800">
+                        <span class="text-xl font-bold text-gray-400">CLP</span>
                     </div>
                 </div>
 
-                <div class="relative py-4 ml-6 border-l-2 border-dashed border-gray-200">
-                    <div class="mb-2 pl-6 flex justify-between text-sm text-gray-500">
-                        <span>Tasa de cambio</span>
-                        <span class="font-bold text-blue-600">1 CLP = 0.0078 BOB</span>
+                <div class="bg-blue-50 rounded-2xl p-4 mb-6">
+                    <div class="flex justify-between text-sm mb-1">
+                        <span class="text-blue-600 font-medium">Tasa de hoy:</span>
+                        <span class="font-bold text-blue-800" id="tasa-texto">1 CLP = 0.0078 BOB</span>
                     </div>
-                    <div class="pl-6 flex justify-between text-sm text-gray-500">
-                        <span>Comisión de envío</span>
-                        <span class="font-bold text-green-600">$0 CLP</span>
+                    <div class="flex justify-between text-sm">
+                        <span class="text-blue-600 font-medium">Comisión:</span>
+                        <span class="font-bold text-green-600">GRATIS</span>
                     </div>
                 </div>
 
                 <div class="mb-8">
-                    <label class="block text-sm font-semibold text-gray-600 mb-2">Reciben en Bolivia</label>
-                    <div class="flex items-center border-2 border-gray-100 bg-gray-50 rounded-xl px-4 py-3">
-                        <input type="text" id="bob-output" readonly value="780.00" class="w-full text-xl font-bold outline-none text-gray-500 bg-transparent">
-                        <span class="flex items-center gap-2 font-bold text-gray-400">🇧🇴 BOB</span>
+                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2 tracking-widest">Reciben en Bolivia</label>
+                    <div class="flex items-center border-b-2 border-gray-200 py-2">
+                        <input type="text" id="bob-output" readonly value="780.00" class="w-full text-3xl font-bold outline-none text-blue-900 bg-transparent">
+                        <span class="text-xl font-bold text-gray-400">BOB</span>
                     </div>
                 </div>
 
-                <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-extrabold py-4 rounded-xl shadow-lg transform hover:scale-[1.02] transition-all text-lg">
-                    ENVIAR AHORA
-                </button>
-
-                <p class="text-center text-xs text-gray-400 mt-4 italic">
-                    *Tasas actualizadas al 22 de abril, 2026.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section class="bg-white py-12">
-        <div class="container mx-auto px-6 text-center">
-            <p class="text-gray-500 font-bold mb-8 uppercase tracking-widest text-sm text-center">Cobros directos en Bolivia con</p>
-            <div class="flex flex-wrap justify-center gap-8 md:gap-16 opacity-60 grayscale hover:grayscale-0 transition-all">
-                <span class="text-xl font-black text-blue-800">BANCO UNIÓN</span>
-                <span class="text-xl font-black text-red-700">BCP</span>
-                <span class="text-xl font-black text-green-800">BANCO GANADERO</span>
-                <span class="text-xl font-black text-blue-900">MERCANTIL</span>
+                <a href="https://wa.me/TUNUMEROAQUI?text=Hola,%20quiero%20hacer%20un%20envío" class="block w-full bg-blue-600 hover:bg-orange-500 text-white text-center font-bold py-5 rounded-2xl transition-all shadow-lg text-xl uppercase tracking-wider">
+                    Solicitar Envío
+                </a>
             </div>
         </div>
     </section>
 
     <script>
+        // ---------------------------------------------------------
+        // MODIFICA AQUÍ LA TASA DE CAMBIO
+        // ---------------------------------------------------------
+        const TASA_ENVIO = 0.0078; 
+        // ---------------------------------------------------------
+
         const clpInput = document.getElementById('clp-input');
         const bobOutput = document.getElementById('bob-output');
-        const tasa = 0.0078;
+        const tasaTexto = document.getElementById('tasa-texto');
+
+        // Actualizar el texto de la tasa visualmente
+        tasaTexto.innerText = `1 CLP = ${TASA_ENVIO} BOB`;
 
         clpInput.addEventListener('input', (e) => {
             const val = e.target.value;
-            const calculo = val * tasa;
-            bobOutput.value = calculo.toLocaleString('es-BO', { minimumFractionDigits: 2 });
+            const resultado = val * TASA_ENVIO;
+            bobOutput.value = resultado.toLocaleString('es-BO', { minimumFractionDigits: 2 });
         });
     </script>
 
