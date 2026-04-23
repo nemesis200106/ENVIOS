@@ -3,85 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizador | Full Cell 360</title>
+    <title>Envíos Calderón | Chile a Bolivia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
-        .card-shadow { box-shadow: 0 20px 40px -10px rgba(0,0,0,0.05); }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08); }
+        .bank-badge { filter: grayscale(100%); opacity: 0.6; transition: all 0.3s; font-size: 10px; font-weight: 800; }
+        .bank-badge:hover { filter: grayscale(0%); opacity: 1; }
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
 
-    <nav class="p-8">
+    <nav class="p-6 md:p-10">
         <div class="container mx-auto flex justify-between items-center">
-            <div class="text-xl font-extrabold tracking-tighter text-slate-900">
-                FULL CELL <span class="text-orange-500">360</span>
+            <div class="flex flex-col">
+                <span class="text-2xl font-black tracking-tighter text-slate-900 uppercase">
+                    ENVÍOS <span class="text-orange-500">CALDERÓN</span>
+                </span>
+                <span class="text-[10px] font-bold text-slate-400 tracking-[0.3em] uppercase">Calama · Santa Cruz</span>
             </div>
-            <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2">
-                <span class="w-2 h-2 bg-green-500 rounded-full"></span> Sistema Activo
+            <div class="hidden md:flex items-center gap-2 bg-green-50 px-3 py-1 rounded-full border border-green-100">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-bold text-green-700 uppercase tracking-widest">Tasa Online</span>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow flex items-center justify-center px-6 pb-20">
+    <main class="flex-grow flex items-center justify-center px-4 pb-16">
         <div class="w-full max-w-lg">
             
-            <div class="text-center mb-10">
-                <h1 class="text-4xl font-extrabold text-slate-900 mb-2 tracking-tight">Envía a Bolivia</h1>
-                <p class="text-slate-500">Cotización segura basada en la tasa del día.</p>
+            <div class="flex flex-wrap justify-center gap-4 mb-8">
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-university text-lg mb-1"></i><span>BCO UNIÓN</span>
+                </div>
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-university text-lg mb-1"></i><span>GANADERO</span>
+                </div>
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-university text-lg mb-1"></i><span>BCP BOLIVIA</span>
+                </div>
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-university text-lg mb-1"></i><span>MERCANTIL</span>
+                </div>
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-wallet text-lg mb-1"></i><span>TIGO MONEY</span>
+                </div>
+                <div class="bank-badge flex flex-col items-center">
+                    <i class="fas fa-wallet text-lg mb-1"></i><span>YOLO PAGO</span>
+                </div>
             </div>
 
-            <div class="bg-white rounded-[2rem] p-10 card-shadow border border-slate-100">
-                
-                <div class="mb-10">
-                    <div class="flex justify-between mb-4">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Desde Chile</span>
-                        <span class="text-xs font-bold text-slate-900">CLP 🇨🇱</span>
+            <div class="bg-white rounded-[2.5rem] p-8 md:p-12 card-shadow border border-slate-50 relative overflow-hidden">
+                <div class="absolute top-0 left-0 w-full h-2 bg-orange-500"></div>
+
+                <div class="mb-12">
+                    <div class="flex justify-between items-end mb-4">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Desde Chile</label>
+                        <span class="text-sm font-bold text-slate-800">CLP 🇨🇱</span>
                     </div>
                     <input type="number" id="input-clp" value="100000" 
-                           class="w-full text-5xl font-extrabold text-slate-900 outline-none placeholder-slate-200">
+                           class="w-full text-5xl font-extrabold text-slate-900 outline-none focus:text-orange-500 transition-colors">
                 </div>
 
-                <div class="flex items-center gap-4 mb-10">
+                <div class="flex items-center gap-4 mb-12">
                     <div class="h-[1px] flex-grow bg-slate-100"></div>
-                    <div id="tasa-badge" class="px-4 py-2 bg-slate-50 border border-slate-100 rounded-full text-[11px] font-bold text-slate-500 italic">
-                        Cargando tasa...
+                    <div id="tasa-badge" class="px-5 py-2 bg-slate-900 rounded-full text-[11px] font-bold text-white tracking-wide shadow-lg">
+                        Sincronizando tasa...
                     </div>
                     <div class="h-[1px] flex-grow bg-slate-100"></div>
                 </div>
 
-                <div class="mb-10">
-                    <div class="flex justify-between mb-4">
-                        <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">Reciben en Bolivia</span>
-                        <span class="text-xs font-bold text-slate-900">BOB 🇧🇴</span>
+                <div class="mb-12">
+                    <div class="flex justify-between items-end mb-4">
+                        <label class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Reciben en Bolivia</label>
+                        <span class="text-sm font-bold text-slate-800">BOB 🇧🇴</span>
                     </div>
                     <input type="text" id="output-bob" readonly 
                            class="w-full text-5xl font-extrabold text-blue-600 bg-transparent outline-none">
                 </div>
 
                 <button onclick="enviarWhatsApp()" 
-                        class="w-full bg-slate-900 hover:bg-orange-500 text-white font-bold py-5 rounded-2xl transition-all duration-300 shadow-lg flex items-center justify-center gap-3 group text-lg">
-                    <span>Solicitar transferencia</span>
-                    <i class="fas fa-arrow-right text-sm group-hover:translate-x-1 transition-transform"></i>
+                        class="w-full bg-slate-900 hover:bg-orange-500 text-white font-bold py-6 rounded-2xl transition-all duration-300 shadow-xl flex items-center justify-center gap-4 group">
+                    <span class="text-lg uppercase tracking-tighter">Solicitar Cotización</span>
+                    <i class="fab fa-whatsapp text-2xl group-hover:rotate-12 transition-transform"></i>
                 </button>
-
             </div>
 
-            <div class="mt-12 flex justify-center gap-8 opacity-20 grayscale">
-                <span class="text-xs font-black italic">BANCO UNIÓN</span>
-                <span class="text-xs font-black italic">BCP</span>
-                <span class="text-xs font-black italic">BANCO GANADERO</span>
-            </div>
+            <p class="text-center mt-10 text-[11px] text-slate-400 font-medium uppercase tracking-[0.2em]">
+                Depósitos inmediatos en Santa Cruz · La Paz · Cochabamba
+            </p>
         </div>
     </main>
 
     <script>
-        // CONFIGURACIÓN ÚNICA
-        const SPREADSHEET_ID = '1w7hj_vFnYEMqdIuHT4Ua2HOhGqjVkPq1K_0qK7q5fLM'; // Reemplaza con el ID de tu Google Sheet
-        const TELEFONO = '56945665141';      // Reemplaza con tu WhatsApp
+        // CONFIGURACIÓN ACTUALIZADA
+        const SPREADSHEET_ID = '1w7hj_vFnYEMqdIuHT4Ua2HOhGqjVkPq1K_0qK7q5fLM';
+        const TELEFONO = '56945665141';
 
         let tasaGlobal = 0;
 
@@ -90,12 +110,14 @@
             try {
                 const res = await fetch(url);
                 const data = await res.text();
+                // Limpieza de datos recibidos de Sheets
                 tasaGlobal = parseFloat(data.replace(/"/g, '').replace(',', '.'));
                 
-                document.getElementById('tasa-badge').innerText = `1 CLP = ${tasaGlobal} BOB`;
+                document.getElementById('tasa-badge').innerHTML = `<i class="fas fa-chart-line mr-2 text-orange-400"></i> 1 CLP = ${tasaGlobal} BOB`;
                 updateCalculo();
             } catch (e) {
                 document.getElementById('tasa-badge').innerText = `Error de conexión`;
+                console.error("Error al cargar Google Sheets:", e);
             }
         }
 
@@ -108,15 +130,17 @@
         function enviarWhatsApp() {
             const clp = document.getElementById('input-clp').value;
             const bob = document.getElementById('output-bob').value;
-            const msg = `*FULL CELL 360 - COTIZACIÓN*%0A%0A` +
-                        `🇨🇱 Envía: ${clp} CLP%0A` +
-                        `🇧🇴 Recibe: ${bob} BOB%0A` +
-                        `📈 Tasa: ${tasaGlobal}%0A%0A` +
-                        `_Solicito datos para depósito._`;
+            const msg = `*ENVÍOS CALDERÓN - SOLICITUD*%0A%0A` +
+                        `🇨🇱 *Envío desde Chile:* ${clp} CLP%0A` +
+                        `🇧🇴 *Reciben en Bolivia:* ${bob} BOB%0A` +
+                        `📈 *Tasa aplicada:* ${tasaGlobal}%0A%0A` +
+                        `_Hola, quiero realizar este envío. Por favor envíeme los datos bancarios._`;
             window.open(`https://wa.me/${TELEFONO}?text=${msg}`, '_blank');
         }
 
         document.getElementById('input-clp').addEventListener('input', updateCalculo);
+        
+        // Carga inicial de la tasa
         fetchTasa();
     </script>
 </body>
