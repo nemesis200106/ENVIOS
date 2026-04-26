@@ -3,131 +3,193 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envíos Calderón | Chile a Bolivia</title>
+    <title>Envíos Calderón | Chile ➔ Bolivia</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #f1f5f9; color: #0f172a; }
-        .card-shadow { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .flag-icon { font-size: 1.5rem; }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #f97316 100%);
+            background-attachment: fixed;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
     </style>
 </head>
-<body class="flex flex-col min-h-screen">
+<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
 
-    <nav class="p-6 md:p-10 bg-white md:bg-transparent">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex flex-col">
-                <span class="text-2xl font-black tracking-tighter text-slate-900 uppercase">
-                    ENVÍOS <span class="text-orange-500">CALDERÓN</span>
-                </span>
-                <span class="text-[10px] font-bold text-slate-400 tracking-[0.3em] uppercase">Tecnología en Remesas</span>
-            </div>
-            <div class="flex items-center gap-2 bg-white px-4 py-2 rounded-full border border-slate-200 shadow-sm">
-                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span class="text-[10px] font-bold text-slate-600 uppercase tracking-widest">Tasa Online</span>
-            </div>
+    <header class="w-full max-w-5xl flex justify-between items-center mb-10 px-4">
+        <div class="text-white">
+            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter uppercase">
+                ENVÍOS <span class="text-orange-500">CALDERÓN</span>
+            </h1>
+            <p class="text-[10px] tracking-[0.4em] uppercase opacity-70">Chile ➔ Bolivia</p>
         </div>
-    </nav>
+        <div class="bg-green-500 text-white px-4 py-1 rounded-full text-[10px] font-bold flex items-center gap-2 shadow-lg shadow-green-500/30">
+            <span class="w-2 h-2 bg-white rounded-full animate-ping"></span> ONLINE
+        </div>
+    </header>
 
-    <main class="flex-grow flex items-center justify-center px-4 py-10">
-        <div class="w-full max-w-lg">
+    <main class="w-full max-w-lg animate-float">
+        <div class="glass-card rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
             
-            <div class="flex flex-wrap justify-center gap-6 mb-8 opacity-50 grayscale hover:grayscale-0 transition-all">
-                <div class="flex flex-col items-center"><i class="fas fa-university text-lg"></i><span class="text-[9px] font-bold mt-1">UNIÓN</span></div>
-                <div class="flex flex-col items-center"><i class="fas fa-university text-lg"></i><span class="text-[9px] font-bold mt-1">GANADERO</span></div>
-                <div class="flex flex-col items-center"><i class="fas fa-university text-lg"></i><span class="text-[9px] font-bold mt-1">BCP</span></div>
-                <div class="flex flex-col items-center"><i class="fas fa-wallet text-lg"></i><span class="text-[9px] font-bold mt-1">TIGO MONEY</span></div>
-                <div class="flex flex-col items-center"><i class="fas fa-wallet text-lg"></i><span class="text-[9px] font-bold mt-1">YOLO</span></div>
-            </div>
+            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-orange-500 to-orange-600"></div>
 
-            <div class="bg-white rounded-[2.5rem] p-8 md:p-12 card-shadow border border-white relative">
-                
-                <div class="mb-10">
-                    <div class="flex justify-between items-center mb-4">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Envías desde Chile</label>
-                        <div class="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100">
-                            <span class="flag-icon">🇨🇱</span>
-                            <span class="text-sm font-bold text-slate-700">CLP</span>
-                        </div>
+            <div class="mb-8">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Tú envías desde Chile</label>
+                    <div class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                        <span class="text-xl">🇨🇱</span>
+                        <span class="text-xs font-bold text-slate-600">CLP</span>
                     </div>
+                </div>
+                <div class="relative">
+                    <span class="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-bold text-slate-300">$</span>
                     <input type="number" id="input-clp" value="100000" 
-                           class="w-full text-5xl font-extrabold text-slate-900 outline-none focus:text-orange-600 transition-colors">
+                           class="w-full pl-6 text-5xl font-extrabold text-slate-900 bg-transparent outline-none focus:text-blue-700 transition-all">
                 </div>
-
-                <div class="flex items-center gap-4 mb-10">
-                    <div class="h-[1px] flex-grow bg-slate-100"></div>
-                    <div id="tasa-badge" class="px-6 py-2 bg-slate-900 rounded-full text-[12px] font-bold text-white shadow-xl flex items-center gap-2">
-                        <i class="fas fa-sync-alt animate-spin text-[10px]"></i> Sincronizando...
-                    </div>
-                    <div class="h-[1px] flex-grow bg-slate-100"></div>
-                </div>
-
-                <div class="mb-12">
-                    <div class="flex justify-between items-center mb-4">
-                        <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Reciben en Bolivia</label>
-                        <div class="flex items-center gap-2 bg-slate-50 px-3 py-1 rounded-lg border border-slate-100">
-                            <span class="flag-icon">🇧🇴</span>
-                            <span class="text-sm font-bold text-slate-700">BOB</span>
-                        </div>
-                    </div>
-                    <input type="text" id="output-bob" readonly 
-                           class="w-full text-5xl font-extrabold text-blue-600 bg-transparent outline-none">
-                </div>
-
-                <button onclick="enviarWhatsApp()" 
-                        class="w-full bg-slate-900 hover:bg-orange-500 text-white font-bold py-6 rounded-2xl transition-all duration-300 shadow-xl flex items-center justify-center gap-4 group">
-                    <span class="text-lg uppercase tracking-tight">Solicitar Cotización</span>
-                    <i class="fab fa-whatsapp text-2xl"></i>
-                </button>
             </div>
 
-            <p class="text-center mt-8 text-[10px] text-slate-400 font-bold uppercase tracking-[0.3em]">
-                Santa Cruz · La Paz · Cochabamba · Beni · Pando
-            </p>
+            <div class="flex items-center gap-4 mb-8">
+                <div class="h-[1px] flex-grow bg-slate-200"></div>
+                <div id="tasa-box" class="px-5 py-2 bg-blue-600 text-white rounded-2xl text-[12px] font-bold shadow-xl border-2 border-white">
+                    <i class="fas fa-sync-alt animate-spin mr-2"></i> Cargando Tasa...
+                </div>
+                <div class="h-[1px] flex-grow bg-slate-200"></div>
+            </div>
+
+            <div class="mb-10">
+                <div class="flex justify-between items-center mb-3">
+                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Reciben en Bolivia</label>
+                    <div class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                        <span class="text-xl">🇧🇴</span>
+                        <span class="text-xs font-bold text-slate-600">BOB</span>
+                    </div>
+                </div>
+                <input type="text" id="output-bob" readonly 
+                       class="w-full text-5xl font-extrabold text-orange-600 bg-transparent outline-none">
+            </div>
+
+            <button onclick="enviarWhatsApp()" 
+                    class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-6 rounded-2xl transition-all transform hover:scale-105 shadow-xl shadow-green-500/40 flex flex-col items-center justify-center group">
+                <div class="flex items-center gap-3">
+                    <span class="text-lg uppercase tracking-tight">Solicitar Datos de Depósito</span>
+                    <i class="fab fa-whatsapp text-3xl group-hover:rotate-12 transition-transform"></i>
+                </div>
+                <span class="text-[9px] opacity-80 font-normal mt-1">Haz clic para que te enviemos las cuentas bancarias</span>
+            </button>
         </div>
     </main>
 
+    <section class="w-full max-w-4xl mt-16 px-4">
+        <h3 class="text-center text-white/60 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">Entidades Disponibles en Bolivia</h3>
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-university text-2xl mb-2 group-hover:text-blue-400"></i>
+                <span class="text-[9px] font-bold">BANCO UNIÓN</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-university text-2xl mb-2 group-hover:text-green-400"></i>
+                <span class="text-[9px] font-bold">BCO GANADERO</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-university text-2xl mb-2 group-hover:text-orange-400"></i>
+                <span class="text-[9px] font-bold">BCP BOLIVIA</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-university text-2xl mb-2 group-hover:text-blue-500"></i>
+                <span class="text-[9px] font-bold">BCO MERCANTIL</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-blue-300"></i>
+                <span class="text-[9px] font-bold">TIGO MONEY</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-yellow-400"></i>
+                <span class="text-[9px] font-bold">YOLO PAGO</span>
+            </div>
+            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
+                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-purple-400"></i>
+                <span class="text-[9px] font-bold">SOLI BOLIVIA</span>
+            </div>
+        </div>
+    </section>
+
+    <footer class="mt-16 pb-10 text-center text-white/30 text-[10px] font-bold tracking-widest uppercase">
+        Envíos Calderón © 2026 · Calama - Santa Cruz
+    </footer>
+
     <script>
-        // CONFIGURACIÓN FINAL
+        // CONFIGURACIÓN PROPORCIONADA
         const SPREADSHEET_ID = '1w7hj_vFnYEMqdIuHT4Ua2HOhGqjVkPq1K_0qK7q5fLM';
         const TELEFONO = '56945665141';
 
         let tasaGlobal = 0;
 
+        // Función para leer la tasa desde Google Sheets
         async function fetchTasa() {
             const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&range=B1`;
             try {
                 const res = await fetch(url);
                 const data = await res.text();
+                // Limpiamos comillas y aseguramos formato decimal
                 tasaGlobal = parseFloat(data.replace(/"/g, '').replace(',', '.'));
                 
-                document.getElementById('tasa-badge').innerHTML = `1 CLP = ${tasaGlobal} BOB`;
+                document.getElementById('tasa-box').innerHTML = `1 CLP = ${tasaGlobal} BOB`;
                 updateCalculo();
             } catch (e) {
-                document.getElementById('tasa-badge').innerText = `Error de Red`;
+                document.getElementById('tasa-box').innerText = "Error al sincronizar";
+                console.error(e);
             }
         }
 
+        // Función para actualizar el cálculo automáticamente
         function updateCalculo() {
             const clp = parseFloat(document.getElementById('input-clp').value) || 0;
             const bob = (clp * tasaGlobal).toLocaleString('es-BO', { minimumFractionDigits: 2 });
             document.getElementById('output-bob').value = bob;
         }
 
+        // Función para enviar a WhatsApp con la petición de datos solicitada
         function enviarWhatsApp() {
             const clp = document.getElementById('input-clp').value;
             const bob = document.getElementById('output-bob').value;
-            const msg = `*ENVÍOS CALDERÓN*%0A%0A` +
-                        `🇨🇱 Envío: ${clp} CLP%0A` +
-                        `🇧🇴 Recibo: ${bob} BOB%0A` +
-                        `📈 Tasa: ${tasaGlobal}%0A%0A` +
-                        `_Solicito información para el depósito._`;
+            
+            // Mensaje que pide los datos de transferencia/depósito
+            const msg = `*ENVÍOS CALDERÓN - SOLICITUD DE DATOS*%0A%0A` +
+                        `🇨🇱 *Envío:* ${clp} CLP%0A` +
+                        `🇧🇴 *Recibo:* ${bob} BOB%0A` +
+                        `📈 *Tasa aplicada:* ${tasaGlobal}%0A%0A` +
+                        `_Hola Diego, quiero realizar este envío. Por favor, *envíeme los datos de transferencia o depósito* para proceder con el pago._`;
+            
             window.open(`https://wa.me/${TELEFONO}?text=${msg}`, '_blank');
         }
 
+        // Escuchar cambios en el input
         document.getElementById('input-clp').addEventListener('input', updateCalculo);
+        
+        // Carga inicial
         fetchTasa();
     </script>
 </body>
