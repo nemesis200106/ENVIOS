@@ -3,194 +3,255 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Envíos Calderón | Chile ➔ Bolivia</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Inventario Fiestas Patrias - FULL CELL CALAMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+        :root { 
+            /* --- COLORES FIESTAS PATRIAS 🇨🇱 --- */
+            --chile-azul: #0033a0; /* Azul bandera */
+            --chile-rojo: #da291c; /* Rojo bandera */
+            --fondo: #f8fafc;
+            --borde: #e2e8f0;
+        }
+        body { background-color: var(--fondo); font-family: 'Inter', system-ui, sans-serif; color: #334155; margin: 0; padding: 0;}
         
-        body { 
-            font-family: 'Poppins', sans-serif; 
-            background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #f97316 100%);
-            background-attachment: fixed;
+        /* Encabezado Principal Dieciochero */
+        .header-app { 
+            background: white; 
+            padding: 1.8rem 0; 
+            border-bottom: 4px solid var(--chile-rojo); /* Línea roja inferior tipo bandera */
+            border-top: 4px solid var(--chile-azul);    /* Línea azul superior */
         }
-
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
+        .brand-title { font-weight: 900; letter-spacing: -1px; color: var(--chile-azul); font-size: 2.2rem; text-align: center; margin-bottom: 0;}
+        .subtitle { font-size: 0.8rem; text-align: center; color: var(--chile-rojo); font-weight: 800; letter-spacing: 1.5px; margin-top: 4px;}
+        
+        /* Barra de Búsqueda Flotante */
+        .sticky-search-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(248, 250, 252, 0.95);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(218, 41, 28, 0.2); /* Sombra roja sutil */
+            box-shadow: 0 4px 10px -2px rgba(0, 51, 160, 0.1);
+            margin-bottom: 20px;
         }
 
-        .animate-float {
-            animation: float 6s ease-in-out infinite;
+        .search-container { max-width: 900px; margin: 0 auto; padding: 0 15px; }
+        .search-bar { 
+            border-radius: 10px; 
+            border: 2px solid var(--chile-azul); 
+            padding: 12px 20px; 
+            font-size: 1rem; 
+            width: 100%;
+            transition: 0.2s;
+            background: white;
         }
+        .search-bar:focus { border-color: var(--chile-rojo); box-shadow: 0 0 0 3px rgba(218, 41, 28, 0.15); outline: none; }
 
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+        /* Cabecera de listado (Solo PC) */
+        .list-header { 
+            display: flex; 
+            padding: 8px 20px; 
+            font-size: 0.75rem; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            color: var(--chile-azul); 
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid var(--chile-azul);
+            margin-bottom: 10px;
         }
+        .list-icon { font-size: 1rem; margin-right: 4px; }
 
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
+        /* Fila de producto */
+        .item-row { 
+            background: white; 
+            border-radius: 8px; 
+            padding: 15px 20px; 
+            margin-bottom: 8px; 
+            border: 1px solid var(--borde);
+            border-left: 4px solid var(--chile-azul); /* Detalle azul en cada tarjeta */
+            display: flex;
+            align-items: center;
+            transition: 0.15s;
+        }
+        .item-row:hover { border-color: var(--chile-azul); box-shadow: 0 4px 8px rgba(0,0,0,0.08); transform: translateY(-1px); }
+
+        /* Estados de Stock */
+        .no-stock { background-color: #fff1f2 !important; border-color: #fecdd3 !important; border-left-color: var(--chile-rojo) !important; opacity: 0.9;}
+        .badge-agotado { background: var(--chile-rojo); color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; }
+        .badge-stock { background: #eff6ff; color: var(--chile-azul); padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 800; border: 1px solid #bfdbfe; }
+
+        /* Sistema de Columnas Base (PC) */
+        .col-main { flex: 2.5; }
+        .col-desc { flex: 4; padding: 0 15px; } 
+        .col-footer { flex: 3; display: flex; align-items: center; } 
+        .col-stock { flex: 1; text-align: center; }
+        .col-price { flex: 1; text-align: right; }
+
+        /* Tipografía */
+        .badge-brand { 
+            background: #f1f5f9; color: #334155; 
+            font-size: 0.65rem; font-weight: 800; 
+            padding: 2px 6px; border-radius: 4px; 
+            text-transform: uppercase; margin-right: 5px;
+        }
+        .product-sku { font-size: 0.65rem; color: #64748b; font-family: monospace; font-weight: 600;}
+        .item-name { font-weight: 800; font-size: 1.05rem; color: #0f172a; display: block; line-height: 1.2; margin-top: 4px; }
+        .item-desc { font-size: 0.85rem; color: #475569; margin: 0; line-height: 1.3; }
+        .price-text { font-size: 1.3rem; font-weight: 900; color: var(--chile-rojo); } /* Precios en rojo para destacar */
+
+        .status-msg { text-align: center; padding: 30px; font-size: 1rem; color: #64748b; font-weight: 600;}
+
+        /* --- OPTIMIZACIÓN PARA MÓVILES --- */
+        @media (max-width: 992px) {
+            .header-app { padding: 1.2rem 0; }
+            .brand-title { font-size: 1.8rem; }
+            .sticky-search-wrapper { padding: 10px 0; margin-bottom: 15px; }
+            .search-bar { padding: 10px 15px; font-size: 0.95rem; }
+            
+            .list-header { display: none; }
+            
+            .item-row { flex-direction: column; align-items: flex-start; padding: 12px 15px; gap: 6px; }
+            .col-main { width: 100%; }
+            .col-desc { width: 100%; padding: 0; }
+            .item-name { font-size: 1rem; } 
+            .item-desc { font-size: 0.8rem; }
+            
+            .col-footer { 
+                width: 100%; 
+                display: flex; 
+                justify-content: space-between; 
+                align-items: center; 
+                border-top: 1px dashed var(--borde); 
+                padding-top: 8px; 
+                margin-top: 4px; 
+            }
+            .col-stock, .col-price { text-align: left; }
+            .col-price { text-align: right; }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center p-4 md:p-8">
+<body>
 
-    <header class="w-full max-w-5xl flex justify-between items-center mb-10 px-4">
-        <div class="text-white">
-            <h1 class="text-2xl md:text-3xl font-extrabold tracking-tighter uppercase">
-                ENVÍOS <span class="text-orange-500">CALDERÓN</span>
-            </h1>
-            <p class="text-[10px] tracking-[0.4em] uppercase opacity-70">Chile ➔ Bolivia</p>
+<header class="header-app">
+    <div class="container">
+        <h1 class="brand-title">🇨🇱 FULL CELL CALAMA 🇨🇱</h1>
+        <p class="subtitle mb-0">SISTEMA DE INVENTARIO - EDICIÓN FIESTAS PATRIAS 🥟🪁</p>
+    </div>
+</header>
+
+<div class="sticky-search-wrapper">
+    <div class="container search-container">
+        <input type="text" id="searchInput" class="form-control search-bar shadow-sm" placeholder="🔍 Buscar código o repuesto (¡Viva Chile!)..." autocomplete="off">
+    </div>
+</div>
+
+<main class="container mb-5" style="max-width: 1000px;">
+    <div class="list-header d-none d-lg-flex">
+        <div class="col-main"><span class="list-icon">⭐</span> Modelo / Referencia</div>
+        <div class="col-desc"><span class="list-icon">🪁</span> Detalle Técnico</div>
+        <div class="col-footer">
+            <div class="col-stock"><span class="list-icon">📦</span> Disponibilidad</div>
+            <div class="col-price"><span class="list-icon">🇨🇱</span> Precio Neto</div>
         </div>
-        <div class="bg-green-500 text-white px-4 py-1 rounded-full text-[10px] font-bold flex items-center gap-2 shadow-lg shadow-green-500/30">
-            <span class="w-2 h-2 bg-white rounded-full animate-ping"></span> ONLINE
-        </div>
-    </header>
+    </div>
 
-    <main class="w-full max-w-lg animate-float">
-        <div class="glass-card rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            
-            <div class="absolute top-0 left-0 w-full h-3 bg-gradient-to-r from-orange-500 to-orange-600"></div>
+    <div id="inventoryList">
+        <div class="status-msg">⏳ Preparando la parrilla de datos...</div>
+    </div>
+</main>
 
-            <div class="mb-8">
-                <div class="flex justify-between items-center mb-3">
-                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Tú envías desde Chile</label>
-                    <div class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                        <span class="text-xl">🇨🇱</span>
-                        <span class="text-xs font-bold text-slate-600">CLP</span>
-                    </div>
-                </div>
-                <div class="relative">
-                    <span class="absolute left-0 top-1/2 -translate-y-1/2 text-2xl font-bold text-slate-300">$</span>
-                    <input type="number" id="input-clp" value="100000" 
-                           class="w-full pl-6 text-5xl font-extrabold text-slate-900 bg-transparent outline-none focus:text-blue-700 transition-all">
-                </div>
-            </div>
+<script>
+    // Tu enlace intacto
+    const SHEET_CSV = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSs_mhwS-Op3r7iDRB3UZutQc8m5_oe5uDUqHzwbLOmHcsOm6uPtm_nYVQgwb9t1tjIWZ2waAnRlTJA/pub?output=csv'; 
 
-            <div class="flex items-center gap-4 mb-8">
-                <div class="h-[1px] flex-grow bg-slate-200"></div>
-                <div id="tasa-box" class="px-5 py-2 bg-blue-600 text-white rounded-2xl text-[12px] font-bold shadow-xl border-2 border-white">
-                    <i class="fas fa-sync-alt animate-spin mr-2"></i> Cargando Tasa...
-                </div>
-                <div class="h-[1px] flex-grow bg-slate-200"></div>
-            </div>
+    let inventory = [];
 
-            <div class="mb-10">
-                <div class="flex justify-between items-center mb-3">
-                    <label class="text-[11px] font-black text-slate-400 uppercase tracking-widest italic">Reciben en Bolivia</label>
-                    <div class="flex items-center gap-2 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
-                        <span class="text-xl">🇧🇴</span>
-                        <span class="text-xs font-bold text-slate-600">BOB</span>
-                    </div>
-                </div>
-                <input type="text" id="output-bob" readonly 
-                       class="w-full text-5xl font-extrabold text-orange-600 bg-transparent outline-none">
-            </div>
-
-            <button onclick="enviarWhatsApp()" 
-                    class="w-full bg-green-500 hover:bg-green-600 text-white font-black py-6 rounded-2xl transition-all transform hover:scale-105 shadow-xl shadow-green-500/40 flex flex-col items-center justify-center group">
-                <div class="flex items-center gap-3">
-                    <span class="text-lg uppercase tracking-tight">Solicitar Datos de Depósito</span>
-                    <i class="fab fa-whatsapp text-3xl group-hover:rotate-12 transition-transform"></i>
-                </div>
-                <span class="text-[9px] opacity-80 font-normal mt-1">Haz clic para que te enviemos las cuentas bancarias</span>
-            </button>
-        </div>
-    </main>
-
-    <section class="w-full max-w-4xl mt-16 px-4">
-        <h3 class="text-center text-white/60 text-[10px] font-bold uppercase tracking-[0.3em] mb-8">Entidades Disponibles en Bolivia</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-6">
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-university text-2xl mb-2 group-hover:text-blue-400"></i>
-                <span class="text-[9px] font-bold">BANCO UNIÓN</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-university text-2xl mb-2 group-hover:text-green-400"></i>
-                <span class="text-[9px] font-bold">BCO GANADERO</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-university text-2xl mb-2 group-hover:text-orange-400"></i>
-                <span class="text-[9px] font-bold">BCP BOLIVIA</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-university text-2xl mb-2 group-hover:text-blue-500"></i>
-                <span class="text-[9px] font-bold">BCO MERCANTIL</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-blue-300"></i>
-                <span class="text-[9px] font-bold">TIGO MONEY</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-yellow-400"></i>
-                <span class="text-[9px] font-bold">YOLO PAGO</span>
-            </div>
-            <div class="flex flex-col items-center text-white/50 hover:text-white transition-colors group">
-                <i class="fas fa-wallet text-2xl mb-2 group-hover:text-purple-400"></i>
-                <span class="text-[9px] font-bold">SOLI BOLIVIA</span>
-            </div>
-        </div>
-    </section>
-
-    <footer class="mt-16 pb-10 text-center text-white/30 text-[10px] font-bold tracking-widest uppercase">
-        Envíos Calderón © 2026 · Calama - Santa Cruz
-    </footer>
-
-    <script>
-        // CONFIGURACIÓN PROPORCIONADA
-        const SPREADSHEET_ID = '1w7hj_vFnYEMqdIuHT4Ua2HOhGqjVkPq1K_0qK7q5fLM';
-        const TELEFONO = '56945665141';
-
-        let tasaGlobal = 0;
-
-        // Función para leer la tasa desde Google Sheets
-        async function fetchTasa() {
-            const url = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:csv&range=B1`;
-            try {
-                const res = await fetch(url);
-                const data = await res.text();
-                // Limpiamos comillas y aseguramos formato decimal
-                tasaGlobal = parseFloat(data.replace(/"/g, '').replace(',', '.'));
+    function loadInventory() {
+        Papa.parse(SHEET_CSV, {
+            download: true,
+            header: false,
+            skipEmptyLines: true,
+            complete: function(results) {
+                const filas = results.data.slice(1);
                 
-                document.getElementById('tasa-box').innerHTML = `1 CLP = ${tasaGlobal} BOB`;
-                updateCalculo();
-            } catch (e) {
-                document.getElementById('tasa-box').innerText = "Error al sincronizar";
-                console.error(e);
+                inventory = filas.map(c => {
+                    return {
+                        codigo: c[0] ? c[0].trim() : 'S/N',
+                        nombre: c[1] ? c[1].trim() : 'Producto sin nombre',
+                        precio: c[2] ? c[2].trim() : '$0',
+                        desc: c[3] ? c[3].trim() : '-',
+                        marca: c[4] ? c[4].trim() : '',
+                        stock: parseInt(c[5]) || 0
+                    };
+                }).filter(item => item.nombre !== 'Producto sin nombre' && item.nombre !== '');
+
+                render(inventory);
+            },
+            error: function(error) {
+                document.getElementById('inventoryList').innerHTML = `<div class="status-msg" style="color: var(--chile-rojo);">❌ Pucha, hubo un error leyendo el archivo.</div>`;
             }
+        });
+    }
+
+    function render(list) {
+        const container = document.getElementById('inventoryList');
+        if (list.length === 0) {
+            container.innerHTML = `<div class="status-msg">No se encontraron artículos con esa búsqueda.</div>`;
+            return;
         }
 
-        // Función para actualizar el cálculo automáticamente
-        function updateCalculo() {
-            const clp = parseFloat(document.getElementById('input-clp').value) || 0;
-            const bob = (clp * tasaGlobal).toLocaleString('es-BO', { minimumFractionDigits: 2 });
-            document.getElementById('output-bob').value = bob;
-        }
+        container.innerHTML = list.map(item => {
+            const hasStock = item.stock > 0;
+            return `
+                <div class="item-row ${!hasStock ? 'no-stock' : ''}">
+                    
+                    <div class="col-main">
+                        <div style="display: flex; align-items: center; margin-bottom: 2px;">
+                            ${item.marca ? `<span class="badge-brand">${item.marca}</span>` : ''}
+                            <span class="product-sku">REF: ${item.codigo}</span>
+                        </div>
+                        <span class="item-name">${item.nombre}</span>
+                    </div>
 
-        // Función para enviar a WhatsApp con la petición de datos solicitada
-        function enviarWhatsApp() {
-            const clp = document.getElementById('input-clp').value;
-            const bob = document.getElementById('output-bob').value;
-            
-            // Mensaje que pide los datos de transferencia/depósito
-            const msg = `*ENVÍOS CALDERÓN - SOLICITUD DE DATOS*%0A%0A` +
-                        `🇨🇱 *Envío:* ${clp} CLP%0A` +
-                        `🇧🇴 *Recibo:* ${bob} BOB%0A` +
-                        `📈 *Tasa aplicada:* ${tasaGlobal}%0A%0A` +
-                        `_Hola Diego, quiero realizar este envío. Por favor, *envíeme los datos de transferencia o depósito* para proceder con el pago._`;
-            
-            window.open(`https://wa.me/${TELEFONO}?text=${msg}`, '_blank');
-        }
+                    <div class="col-desc">
+                        <p class="item-desc">${item.desc}</p>
+                    </div>
 
-        // Escuchar cambios en el input
-        document.getElementById('input-clp').addEventListener('input', updateCalculo);
-        
-        // Carga inicial
-        fetchTasa();
-    </script>
+                    <div class="col-footer">
+                        <div class="col-stock">
+                            <span class="${hasStock ? 'badge-stock' : 'badge-agotado'}">
+                                ${hasStock ? item.stock + ' UNID' : 'AGOTADO'}
+                            </span>
+                        </div>
+                        <div class="col-price">
+                            <span class="price-text">${item.precio}</span>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+        }).join('');
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        const filtered = inventory.filter(i => 
+            i.nombre.toLowerCase().includes(term) || 
+            i.codigo.toLowerCase().includes(term) ||
+            i.desc.toLowerCase().includes(term) ||
+            i.marca.toLowerCase().includes(term)
+        );
+        render(filtered);
+    });
+
+    loadInventory();
+</script>
+
 </body>
 </html>
